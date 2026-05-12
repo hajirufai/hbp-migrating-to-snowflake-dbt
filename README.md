@@ -1,12 +1,12 @@
-# Customer Health Analytics dbt + Snowflake Project
+# Customer Health Analytics with dbt and Snowflake
 
-This project is a small, interview-ready analytics pipeline for a customer success and renewal-risk use case.
+This is a portfolio analytics engineering project for a customer success and renewal-risk use case.
 
-It combines data from multiple operational sources, models it in dbt, and produces account health, customer engagement, and content performance reporting in Snowflake.
+I used Snowflake for the warehouse layer and dbt for seeds, staging models, marts, and tests. The final outputs show account health, revenue at risk, and content performance.
 
 ## Business Problem
 
-Organizations that sell learning or subscription-based digital products to universities, enterprises, nonprofits, and leadership teams need to understand whether customers are getting value before renewal conversations. Customer success and revenue leaders need to know:
+Learning and subscription businesses need to know whether customers are getting value before renewal conversations. In this case, the useful questions are:
 
 - Which customer accounts are healthy, at risk, or need attention before renewal?
 - Are licensed seats actually being used?
@@ -15,21 +15,21 @@ Organizations that sell learning or subscription-based digital products to unive
 
 ## Stakeholders
 
-- Customer Success Managers: prioritize accounts that need outreach.
-- Revenue and Renewal Leaders: protect annual contract value before renewal dates.
-- Product and Content Teams: understand which cases, simulations, courses, and articles are performing.
-- Data Team: provide clean, trusted models instead of one-off spreadsheet analysis.
+- Customer Success: prioritize accounts that need outreach.
+- Revenue: understand annual contract value attached to risky accounts.
+- Product and Content: see which learning materials drive engagement and completion.
+- Data: maintain tested models instead of rebuilding reports manually.
 
 ## Data Sources
 
-This demo uses four CSV seed files that represent common business system extracts:
+The demo uses four CSV seed files:
 
 - `accounts.csv`: CRM account/customer data.
 - `subscriptions.csv`: CRM or billing subscription and renewal data.
 - `content_engagement.csv`: learning platform event data.
 - `support_tickets.csv`: helpdesk support ticket data.
 
-In a real production stack, these would usually arrive through Fivetran, Airbyte, Snowpipe, S3 stages, or source application APIs. For the interview, CSV seeds keep the demo fast while still showing the modeling pattern.
+In a production stack, these files would usually come from tools such as Salesforce, a billing platform, a learning platform database, Zendesk, S3/Snowpipe, Fivetran, Airbyte, or source APIs. I used seeds here so the project can be reviewed and rerun quickly.
 
 ## dbt Models
 
@@ -71,6 +71,72 @@ dbt run
 dbt test
 ```
 
+## Snowflake Evidence
+
+I included Snowflake worksheet scripts in [`snowflake_worksheets/`](snowflake_worksheets/) so reviewers can see the raw sources, staging views, transformation SQL, and final outputs.
+
+This demo does not require a Snowflake UI Project. The work is shown through SQL worksheets, database objects, dbt models, and screenshots.
+
+Completed Snowflake screenshots are stored in [`evidence_screenshots/`](evidence_screenshots/). These images are screenshots from the Snowflake UI showing the worksheet SQL and result grids.
+
+Use this worksheet context at the top of every Snowflake script:
+
+```sql
+use role accountadmin;
+use warehouse HBP_DEMO_WH;
+use database HBP_DEMO;
+```
+
+The main Snowflake objects are:
+
+- Raw sources: `HBP_DEMO.RAW_RAW`
+- dbt staging views: `HBP_DEMO.RAW_STAGING`
+- dbt final marts: `HBP_DEMO.RAW_MARTS`
+
+Worksheet scripts:
+
+| Order | SQL file | What it proves | Suggested screenshot name |
+| --- | --- | --- | --- |
+| Optional fix | [`00_rebuild_staging_views_if_needed.sql`](snowflake_worksheets/00_rebuild_staging_views_if_needed.sql) | Repairs staging views if old views fail on blank dates | `00_rebuild_staging_views_if_needed.png` |
+| 1 | [`01_environment_and_schemas.sql`](snowflake_worksheets/01_environment_and_schemas.sql) | Snowflake role, warehouse, database, and schemas are available | `01_environment_and_schemas.png` |
+| 2 | [`02_raw_sources_preview.sql`](snowflake_worksheets/02_raw_sources_preview.sql) | Raw CSV seed data is loaded into Snowflake source tables | `02_raw_sources_preview.png` |
+| 3 | [`03_source_row_counts.sql`](snowflake_worksheets/03_source_row_counts.sql) | Every raw source table has records | `03_source_row_counts.png` |
+| 4 | [`04_staging_views_preview.sql`](snowflake_worksheets/04_staging_views_preview.sql) | dbt created staging views for cleaned source data | `04_staging_views_preview.png` |
+| 5 | [`05_view_transformation_sql.sql`](snowflake_worksheets/05_view_transformation_sql.sql) | Snowflake can show the SQL behind the dbt-created views | `05_view_transformation_sql.png` |
+| 6 | [`06_final_outputs_preview.sql`](snowflake_worksheets/06_final_outputs_preview.sql) | dbt created final mart tables for analysis | `06_final_outputs_preview.png` |
+| 7 | [`07_account_health_dashboard.sql`](snowflake_worksheets/07_account_health_dashboard.sql) | Final customer health output for Customer Success | `07_account_health_dashboard.png` |
+| 8 | [`08_revenue_at_risk.sql`](snowflake_worksheets/08_revenue_at_risk.sql) | Revenue-at-risk summary by account health status | `08_revenue_at_risk.png` |
+| 9 | [`09_content_performance_dashboard.sql`](snowflake_worksheets/09_content_performance_dashboard.sql) | Learning content performance output | `09_content_performance_dashboard.png` |
+| 10 | [`10_source_to_output_audit.sql`](snowflake_worksheets/10_source_to_output_audit.sql) | End-to-end row count check from source to output | `10_source_to_output_audit.png` |
+
+Snowflake worksheet name used for the screenshots:
+
+```text
+hbp_customer_health_demo.sql
+```
+
+Screenshot flow:
+
+1. Open one Snowflake worksheet named `hbp_customer_health_demo.sql`.
+2. Paste and run one script at a time from the `snowflake_worksheets/` folder.
+3. Take a screenshot of the SQL and result grid.
+4. Save each screenshot in [`evidence_screenshots/`](evidence_screenshots/) using the suggested screenshot name in the table.
+
+## Demo Data Note
+
+This is a portfolio demo. It does not use Harvard Business Publishing internal systems, confidential data, proprietary business logic, or private customer information.
+
+The project uses synthetic CSV seed data and a Harvard Business Publishing-style business scenario to show:
+
+- Snowflake warehouse setup
+- dbt seed loading
+- dbt staging views
+- dbt mart transformations
+- data quality tests
+- dashboard-ready SQL analysis
+
+The purpose is to show the core workflow for a junior data engineer role: load source data, model it with dbt, test it, and produce analysis-ready tables.
+
 ## Suggested Demo Flow
 
 1. Explain the business problem and stakeholders.
@@ -80,6 +146,6 @@ dbt test
 5. Run `dbt test` to show data quality checks.
 6. Open the report queries in `analyses/` and explain the insights.
 
-## Interview Sound Bite
+## Short Summary
 
-I built a simple ELT pipeline in Snowflake and dbt that combines CRM, subscription, product engagement, and support data. The goal is to help customer success and revenue teams identify renewal risk early and understand which content or product experiences drive engagement. I used dbt staging models to clean raw extracts, mart models to calculate KPIs, and tests to enforce basic data quality.
+I built an ELT pipeline in Snowflake and dbt using CRM-style account data, subscription data, learning engagement data, and support ticket data. The project turns those sources into tested mart tables for account health, renewal risk, and content performance analysis.
