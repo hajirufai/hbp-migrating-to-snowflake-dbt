@@ -93,21 +93,65 @@ The main Snowflake objects are:
 - dbt staging views: `HBP_DEMO.RAW_STAGING`
 - dbt final marts: `HBP_DEMO.RAW_MARTS`
 
-Worksheet scripts:
+Worksheet scripts and screenshots:
 
-| Order | SQL file | What it proves | Suggested screenshot name |
+| Order | SQL file | What it proves | Screenshot |
 | --- | --- | --- | --- |
-| Optional fix | [`00_rebuild_staging_views_if_needed.sql`](snowflake_worksheets/00_rebuild_staging_views_if_needed.sql) | Repairs staging views if old views fail on blank dates | `00_rebuild_staging_views_if_needed.png` |
-| 1 | [`01_environment_and_schemas.sql`](snowflake_worksheets/01_environment_and_schemas.sql) | Snowflake role, warehouse, database, and schemas are available | `01_environment_and_schemas.png` |
-| 2 | [`02_raw_sources_preview.sql`](snowflake_worksheets/02_raw_sources_preview.sql) | Raw CSV seed data is loaded into Snowflake source tables | `02_raw_sources_preview.png` |
-| 3 | [`03_source_row_counts.sql`](snowflake_worksheets/03_source_row_counts.sql) | Every raw source table has records | `03_source_row_counts.png` |
-| 4 | [`04_staging_views_preview.sql`](snowflake_worksheets/04_staging_views_preview.sql) | dbt created staging views for cleaned source data | `04_staging_views_preview.png` |
-| 5 | [`05_view_transformation_sql.sql`](snowflake_worksheets/05_view_transformation_sql.sql) | Snowflake can show the SQL behind the dbt-created views | `05_view_transformation_sql.png` |
-| 6 | [`06_final_outputs_preview.sql`](snowflake_worksheets/06_final_outputs_preview.sql) | dbt created final mart tables for analysis | `06_final_outputs_preview.png` |
-| 7 | [`07_account_health_dashboard.sql`](snowflake_worksheets/07_account_health_dashboard.sql) | Final customer health output for Customer Success | `07_account_health_dashboard.png` |
-| 8 | [`08_revenue_at_risk.sql`](snowflake_worksheets/08_revenue_at_risk.sql) | Revenue-at-risk summary by account health status | `08_revenue_at_risk.png` |
-| 9 | [`09_content_performance_dashboard.sql`](snowflake_worksheets/09_content_performance_dashboard.sql) | Learning content performance output | `09_content_performance_dashboard.png` |
-| 10 | [`10_source_to_output_audit.sql`](snowflake_worksheets/10_source_to_output_audit.sql) | End-to-end row count check from source to output | `10_source_to_output_audit.png` |
+| Optional fix | [`00_rebuild_staging_views_if_needed.sql`](snowflake_worksheets/00_rebuild_staging_views_if_needed.sql) | Repairs staging views if old views fail on blank dates | No screenshot needed |
+| 1 | [`01_environment_and_schemas.sql`](snowflake_worksheets/01_environment_and_schemas.sql) | Snowflake role, warehouse, database, and schemas are available | [`01_environment_and_schemas.png`](evidence_screenshots/01_environment_and_schemas.png) |
+| 2 | [`02_raw_sources_preview.sql`](snowflake_worksheets/02_raw_sources_preview.sql) | Raw CSV seed data is loaded into Snowflake source tables | [`02_raw_sources_preview.png`](evidence_screenshots/02_raw_sources_preview.png) |
+| 3 | [`03_source_row_counts.sql`](snowflake_worksheets/03_source_row_counts.sql) | Every raw source table has records | [`03_source_row_counts.png`](evidence_screenshots/03_source_row_counts.png) |
+| 4 | [`04_staging_views_preview.sql`](snowflake_worksheets/04_staging_views_preview.sql) | dbt created staging views for cleaned source data | [`04_staging_views_preview.png`](evidence_screenshots/04_staging_views_preview.png) |
+| 5 | [`05_view_transformation_sql.sql`](snowflake_worksheets/05_view_transformation_sql.sql) | Snowflake can show the SQL behind the dbt-created views | [`05_view_transformation_sql.png`](evidence_screenshots/05_view_transformation_sql.png) |
+| 6 | [`06_final_outputs_preview.sql`](snowflake_worksheets/06_final_outputs_preview.sql) | dbt created final mart tables for analysis | [`06_final_outputs_preview.png`](evidence_screenshots/06_final_outputs_preview.png) |
+| 7 | [`07_account_health_dashboard.sql`](snowflake_worksheets/07_account_health_dashboard.sql) | Final customer health output for Customer Success | [`07_account_health_dashboard.png`](evidence_screenshots/07_account_health_dashboard.png) |
+| 8 | [`08_revenue_at_risk.sql`](snowflake_worksheets/08_revenue_at_risk.sql) | Revenue-at-risk summary by account health status | [`08_revenue_at_risk.png`](evidence_screenshots/08_revenue_at_risk.png) |
+| 9 | [`09_content_performance_dashboard.sql`](snowflake_worksheets/09_content_performance_dashboard.sql) | Learning content performance output | [`09_content_performance_dashboard.png`](evidence_screenshots/09_content_performance_dashboard.png) |
+| 10 | [`10_source_to_output_audit.sql`](snowflake_worksheets/10_source_to_output_audit.sql) | End-to-end row count check from source to output | [`10_source_to_output_audit.png`](evidence_screenshots/10_source_to_output_audit.png) |
+
+## Snowflake UI Screenshots
+
+The images below are screenshots from Snowflake worksheets. They show the SQL on top and the result grid below.
+
+### 01 Environment and Schemas
+
+<img src="evidence_screenshots/01_environment_and_schemas.png" width="800" alt="Snowflake worksheet showing environment and schemas">
+
+### 02 Raw Sources Preview
+
+<img src="evidence_screenshots/02_raw_sources_preview.png" width="800" alt="Snowflake worksheet showing raw source table preview">
+
+### 03 Source Row Counts
+
+<img src="evidence_screenshots/03_source_row_counts.png" width="800" alt="Snowflake worksheet showing source row counts">
+
+### 04 Staging Views Preview
+
+<img src="evidence_screenshots/04_staging_views_preview.png" width="800" alt="Snowflake worksheet showing dbt staging view preview">
+
+### 05 View Transformation SQL
+
+<img src="evidence_screenshots/05_view_transformation_sql.png" width="800" alt="Snowflake worksheet showing dbt view DDL">
+
+### 06 Final Outputs Preview
+
+<img src="evidence_screenshots/06_final_outputs_preview.png" width="800" alt="Snowflake worksheet showing final dbt mart output preview">
+
+### 07 Account Health Dashboard
+
+<img src="evidence_screenshots/07_account_health_dashboard.png" width="800" alt="Snowflake worksheet showing account health dashboard query">
+
+### 08 Revenue at Risk
+
+<img src="evidence_screenshots/08_revenue_at_risk.png" width="800" alt="Snowflake worksheet showing revenue at risk query">
+
+### 09 Content Performance Dashboard
+
+<img src="evidence_screenshots/09_content_performance_dashboard.png" width="800" alt="Snowflake worksheet showing content performance query">
+
+### 10 Source to Output Audit
+
+<img src="evidence_screenshots/10_source_to_output_audit.png" width="800" alt="Snowflake worksheet showing source to output audit query">
 
 Snowflake worksheet name used for the screenshots:
 
