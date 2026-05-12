@@ -1,0 +1,7 @@
+subscription_id,account_id,product_line,contract_start_date,contract_end_date,licensed_seats,annual_contract_value,renewal_stage
+S001,A001,HBP Education,2025-08-01,2026-07-31,1200,96000,Expansion discussion
+S002,A002,HBP Corporate Learning,2025-06-15,2026-06-14,2400,210000,Renewal pending
+S003,A003,HBP Corporate Learning,2025-10-01,2026-09-30,1800,155000,Healthy
+S004,A004,HBP Corporate Learning,2026-01-01,2026-12-31,700,54000,Healthy
+S005,A005,HBP Education,2025-09-01,2026-08-31,950,76000,At risk
+S006,A006,HBP Education,2026-02-01,2027-01-31,350,26000,Healthy

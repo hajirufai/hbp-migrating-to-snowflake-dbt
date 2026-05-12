@@ -1,0 +1,9 @@
+ticket_id,account_id,created_date,closed_date,priority,category,status,csat_score
+T001,A001,2026-04-03,2026-04-04,Medium,Login,Closed,5
+T002,A002,2026-04-06,2026-04-08,High,Reporting,Closed,3
+T003,A002,2026-04-19,,High,Integration,Open,
+T004,A003,2026-04-07,2026-04-07,Low,Content,Closed,5
+T005,A004,2026-04-13,2026-04-15,Medium,Login,Closed,4
+T006,A005,2026-04-02,2026-04-06,High,Performance,Closed,2
+T007,A005,2026-04-17,,High,Reporting,Open,
+T008,A006,2026-04-21,2026-04-22,Low,Content,Closed,5

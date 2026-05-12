@@ -1,0 +1,14 @@
+hbp_learning_analytics:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: mkskywk-qy23935
+      user: HAJIRUFAI
+      password: "{{ env_var('SNOWFLAKE_PASSWORD') }}"
+      role: ACCOUNTADMIN
+      database: HBP_DEMO
+      warehouse: HBP_DEMO_WH
+      schema: RAW
+      threads: 4
+      client_session_keep_alive: false

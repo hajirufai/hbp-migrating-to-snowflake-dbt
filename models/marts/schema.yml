@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: dim_accounts
+    description: One row per customer account with subscription and renewal context.
+    columns:
+      - name: account_id
+        tests:
+          - not_null
+          - unique
+  - name: fct_account_health
+    description: Account-level engagement, support, and renewal risk metrics.
+    columns:
+      - name: account_id
+        tests:
+          - not_null
+          - unique
+      - name: account_health_status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['High risk', 'Watch', 'Healthy']
+  - name: fct_content_performance
+    description: Content-level usage and completion metrics.
+    columns:
+      - name: content_id
+        tests:
+          - not_null

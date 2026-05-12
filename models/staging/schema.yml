@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: stg_accounts
+    description: Clean account/customer dimension from a CRM export.
+    columns:
+      - name: account_id
+        tests:
+          - not_null
+          - unique
+  - name: stg_subscriptions
+    description: Subscription and renewal details from billing or CRM.
+    columns:
+      - name: subscription_id
+        tests:
+          - not_null
+          - unique
+      - name: account_id
+        tests:
+          - not_null
+  - name: stg_content_engagement
+    description: Product learning events from the learning platform.
+    columns:
+      - name: event_id
+        tests:
+          - not_null
+          - unique
+      - name: account_id
+        tests:
+          - not_null
+  - name: stg_support_tickets
+    description: Customer support tickets from a helpdesk export.
+    columns:
+      - name: ticket_id
+        tests:
+          - not_null
+          - unique
+      - name: account_id
+        tests:
+          - not_null
