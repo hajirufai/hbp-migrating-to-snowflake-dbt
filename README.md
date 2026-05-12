@@ -22,7 +22,7 @@ Learning and subscription businesses need to know whether customers are getting 
 
 ## Data Sources
 
-The demo uses four CSV seed files:
+The project uses four CSV seed files:
 
 - `accounts.csv`: CRM account/customer data.
 - `subscriptions.csv`: CRM or billing subscription and renewal data.
