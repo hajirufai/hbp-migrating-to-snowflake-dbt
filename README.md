@@ -122,7 +122,7 @@ Screenshot flow:
 3. Take a screenshot of the SQL and result grid.
 4. Save each screenshot in [`evidence_screenshots/`](evidence_screenshots/) using the suggested screenshot name in the table.
 
-## Demo Data Note
+## Disclaimer
 
 This is a portfolio demo. It does not use Harvard Business Publishing internal systems, confidential data, proprietary business logic, or private customer information.
 
@@ -137,14 +137,6 @@ The project uses synthetic CSV seed data and a Harvard Business Publishing-style
 
 The purpose is to show the core workflow for a junior data engineer role: load source data, model it with dbt, test it, and produce analysis-ready tables.
 
-## Suggested Demo Flow
-
-1. Explain the business problem and stakeholders.
-2. Show the raw source files as simulated extracts from different systems.
-3. Show staging models that clean and standardize the raw data.
-4. Show mart models that combine engagement, subscription, and support data.
-5. Run `dbt test` to show data quality checks.
-6. Open the report queries in `analyses/` and explain the insights.
 
 ## Short Summary
 
