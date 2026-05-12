@@ -152,6 +152,146 @@ High risk: 2
 Watch: 1
 ```
 
+## How To See Source and Output in Snowflake
+
+If the Snowflake Home or Projects page looks empty, that does not mean the data is missing. Projects are only worksheets, notebooks, Streamlit apps, and dashboards. To see the actual database objects, open a SQL Worksheet or go to:
+
+```text
+Data > Databases > HBP_DEMO
+```
+
+Use this setup at the top of a Snowflake worksheet:
+
+```sql
+use role accountadmin;
+use warehouse HBP_DEMO_WH;
+use database HBP_DEMO;
+```
+
+List the available schemas:
+
+```sql
+show schemas in database HBP_DEMO;
+```
+
+The raw source tables from the CSV seed files are usually here:
+
+```text
+HBP_DEMO.RAW_RAW
+```
+
+The dbt staging views are usually here:
+
+```text
+HBP_DEMO.RAW_STAGING
+```
+
+The final dbt output tables are usually here:
+
+```text
+HBP_DEMO.RAW_MARTS
+```
+
+If your dbt target schema was different, the prefix before `_RAW`, `_STAGING`, and `_MARTS` may also be different.
+
+### View the Source Tables
+
+```sql
+show tables in schema HBP_DEMO.RAW_RAW;
+
+select * from HBP_DEMO.RAW_RAW.ACCOUNTS limit 20;
+select * from HBP_DEMO.RAW_RAW.SUBSCRIPTIONS limit 20;
+select * from HBP_DEMO.RAW_RAW.CONTENT_ENGAGEMENT limit 20;
+select * from HBP_DEMO.RAW_RAW.SUPPORT_TICKETS limit 20;
+```
+
+Count rows in every source table:
+
+```sql
+select 'ACCOUNTS' as source_table, count(*) as row_count
+from HBP_DEMO.RAW_RAW.ACCOUNTS
+union all
+select 'SUBSCRIPTIONS', count(*)
+from HBP_DEMO.RAW_RAW.SUBSCRIPTIONS
+union all
+select 'CONTENT_ENGAGEMENT', count(*)
+from HBP_DEMO.RAW_RAW.CONTENT_ENGAGEMENT
+union all
+select 'SUPPORT_TICKETS', count(*)
+from HBP_DEMO.RAW_RAW.SUPPORT_TICKETS;
+```
+
+### View the dbt Staging Views
+
+```sql
+show views in schema HBP_DEMO.RAW_STAGING;
+
+select * from HBP_DEMO.RAW_STAGING.STG_ACCOUNTS limit 20;
+select * from HBP_DEMO.RAW_STAGING.STG_SUBSCRIPTIONS limit 20;
+select * from HBP_DEMO.RAW_STAGING.STG_CONTENT_ENGAGEMENT limit 20;
+select * from HBP_DEMO.RAW_STAGING.STG_SUPPORT_TICKETS limit 20;
+```
+
+See the SQL source code behind a staging view:
+
+```sql
+select get_ddl('VIEW', 'HBP_DEMO.RAW_STAGING.STG_ACCOUNTS');
+select get_ddl('VIEW', 'HBP_DEMO.RAW_STAGING.STG_SUBSCRIPTIONS');
+select get_ddl('VIEW', 'HBP_DEMO.RAW_STAGING.STG_CONTENT_ENGAGEMENT');
+select get_ddl('VIEW', 'HBP_DEMO.RAW_STAGING.STG_SUPPORT_TICKETS');
+```
+
+### View the Final Output Tables
+
+```sql
+show tables in schema HBP_DEMO.RAW_MARTS;
+
+select * from HBP_DEMO.RAW_MARTS.DIM_ACCOUNTS limit 20;
+select * from HBP_DEMO.RAW_MARTS.FCT_ACCOUNT_HEALTH limit 20;
+select * from HBP_DEMO.RAW_MARTS.FCT_CONTENT_PERFORMANCE limit 20;
+```
+
+Count rows in every final output table:
+
+```sql
+select 'DIM_ACCOUNTS' as output_table, count(*) as row_count
+from HBP_DEMO.RAW_MARTS.DIM_ACCOUNTS
+union all
+select 'FCT_ACCOUNT_HEALTH', count(*)
+from HBP_DEMO.RAW_MARTS.FCT_ACCOUNT_HEALTH
+union all
+select 'FCT_CONTENT_PERFORMANCE', count(*)
+from HBP_DEMO.RAW_MARTS.FCT_CONTENT_PERFORMANCE;
+```
+
+### Quick Source to Output Check
+
+This query lets you show the full story in one place: raw sources loaded, staging views created, and final mart tables produced.
+
+```sql
+select 'Source' as layer, 'ACCOUNTS' as object_name, count(*) as row_count
+from HBP_DEMO.RAW_RAW.ACCOUNTS
+union all
+select 'Source', 'SUBSCRIPTIONS', count(*)
+from HBP_DEMO.RAW_RAW.SUBSCRIPTIONS
+union all
+select 'Source', 'CONTENT_ENGAGEMENT', count(*)
+from HBP_DEMO.RAW_RAW.CONTENT_ENGAGEMENT
+union all
+select 'Source', 'SUPPORT_TICKETS', count(*)
+from HBP_DEMO.RAW_RAW.SUPPORT_TICKETS
+union all
+select 'Output', 'DIM_ACCOUNTS', count(*)
+from HBP_DEMO.RAW_MARTS.DIM_ACCOUNTS
+union all
+select 'Output', 'FCT_ACCOUNT_HEALTH', count(*)
+from HBP_DEMO.RAW_MARTS.FCT_ACCOUNT_HEALTH
+union all
+select 'Output', 'FCT_CONTENT_PERFORMANCE', count(*)
+from HBP_DEMO.RAW_MARTS.FCT_CONTENT_PERFORMANCE
+order by layer, object_name;
+```
+
 ## Board Presentation Talk Track
 
 This project demonstrates how a data team can turn disconnected operational data into a decision-ready customer health view.
